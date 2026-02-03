@@ -1,9 +1,41 @@
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
-	
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 3 3 4 4 . . . . . . 
+        . . . . . . 3 2 2 5 . . . . . . 
+        . . . . . . 3 2 4 4 . . . . . . 
+        . . . . . . 4 2 2 4 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, mySprite, 0, 50)
+})
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    info.changeLifeBy(-1)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    info.changeScoreBy(1)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    sprites.destroy(otherSprite, effects.confetti, 100)
+    info.changeScoreBy(1)
 })
 let Hai: Sprite = null
+let projectile: Sprite = null
+let mySprite: Sprite = null
 tiles.setCurrentTilemap(tilemap`level1`)
-let mySprite = sprites.create(img`
+mySprite = sprites.create(img`
     ........ccc.............
     ........cccccccc........
     .....cc..cc55555cc......
@@ -66,10 +98,10 @@ let Mat = sprites.create(img`
     ................................
     ................................
     `, SpriteKind.Food)
-Mat.setPosition(scene.screenWidth() * 0.75, scene.screenHeight() * 0.5)
+Mat.setPosition(scene.screenWidth() * 0.9, scene.screenHeight() * 0.5)
 scene.cameraFollowSprite(mySprite)
-info.setScore(0)
 info.setLife(3)
+info.setScore(0)
 game.onUpdateInterval(1000, function () {
     Hai = sprites.create(img`
         ...........fffffff...ccfff..........
@@ -90,6 +122,6 @@ game.onUpdateInterval(1000, function () {
         ....................fffff........fff
         `, SpriteKind.Enemy)
     Hai.setPosition(randint(0, scene.screenWidth()), scene.screenHeight())
-    Hai.setVelocity(-10, 50)
-    Hai.setFlag(SpriteFlag.AutoDestroy, true)
+    Hai.setVelocity(0, -50)
+    Hai.setFlag(SpriteFlag.DestroyOnWall, true)
 })
