@@ -35,6 +35,7 @@ let Hai: Sprite = null
 let projectile: Sprite = null
 let mySprite: Sprite = null
 tiles.setCurrentTilemap(tilemap`level1`)
+controller.moveSprite(mySprite)
 mySprite = sprites.create(img`
     ........ccc.............
     ........cccccccc........
@@ -102,6 +103,7 @@ Mat.setPosition(scene.screenWidth() * 0.9, scene.screenHeight() * 0.5)
 scene.cameraFollowSprite(mySprite)
 info.setLife(3)
 info.setScore(0)
+let EnemySpeed = 1
 game.onUpdateInterval(1000, function () {
     Hai = sprites.create(img`
         ...........fffffff...ccfff..........
@@ -122,6 +124,6 @@ game.onUpdateInterval(1000, function () {
         ....................fffff........fff
         `, SpriteKind.Enemy)
     Hai.setPosition(randint(0, scene.screenWidth()), scene.screenHeight())
-    Hai.setVelocity(0, -50)
+    Hai.setVelocity(0, -40 + EnemySpeed)
     Hai.setFlag(SpriteFlag.DestroyOnWall, true)
 })
