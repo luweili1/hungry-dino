@@ -1,3 +1,6 @@
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
+    game.gameOver(false)
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy += -200
@@ -39,8 +42,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
         ................................
         ................................
         ................................
-        `, SpriteKind.Player)
-    tiles.placeOnRandomTile(Mat, sprites.builtin.coral5)
+        `, SpriteKind.Food)
+    tiles.placeOnRandomTile(Mat, assets.tile`myTile`)
 })
 let Mat: Sprite = null
 let mySprite: Sprite = null
@@ -75,7 +78,7 @@ mySprite = sprites.create(img`
 mySprite.ay = 300
 info.setScore(0)
 info.setLife(3)
-for (let index = 0; index < 4; index++) {
+for (let index = 0; index < 5; index++) {
     Mat = sprites.create(img`
         ................................
         ................................
@@ -109,8 +112,8 @@ for (let index = 0; index < 4; index++) {
         ................................
         ................................
         ................................
-        `, SpriteKind.Player)
-    tiles.placeOnRandomTile(Mat, sprites.builtin.coral5)
+        `, SpriteKind.Food)
+    tiles.placeOnRandomTile(Mat, assets.tile`myTile`)
 }
 controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
