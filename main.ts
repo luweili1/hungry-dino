@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const Goal = SpriteKind.create()
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
     game.gameOver(false)
 })
@@ -8,6 +11,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 info.onCountdownEnd(function () {
     game.gameOver(false)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
+    game.gameOver(true)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
@@ -51,6 +57,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 })
 let Mat: Sprite = null
 let mySprite: Sprite = null
+effects.clouds.startScreenEffect()
 scene.setBackgroundColor(9)
 tiles.setCurrentTilemap(tilemap`level1`)
 mySprite = sprites.create(img`
