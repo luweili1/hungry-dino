@@ -6,6 +6,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite.vy += -200
     }
 })
+info.onCountdownEnd(function () {
+    game.gameOver(false)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     info.changeScoreBy(1)
@@ -44,6 +47,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
         ................................
         `, SpriteKind.Food)
     tiles.placeOnRandomTile(Mat, assets.tile`myTile`)
+    info.changeCountdownBy(3)
 })
 let Mat: Sprite = null
 let mySprite: Sprite = null
@@ -117,3 +121,5 @@ for (let index = 0; index < 5; index++) {
 }
 controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
+info.startCountdown(20)
+game.splash("Finn taco til dino")
