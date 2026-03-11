@@ -15,6 +15,9 @@ info.onCountdownEnd(function () {
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
     game.gameOver(true)
 })
+info.onLifeZero(function () {
+    game.gameOver(false)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     info.changeScoreBy(1)
@@ -55,6 +58,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     tiles.placeOnRandomTile(Mat, assets.tile`myTile`)
     info.changeCountdownBy(3)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    info.changeLifeBy(-1)
+})
+let Fiende: Sprite = null
 let Mat: Sprite = null
 let mySprite: Sprite = null
 effects.clouds.startScreenEffect()
@@ -130,3 +138,27 @@ controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
 info.startCountdown(20)
 game.splash("Finn taco til dino")
+game.onUpdateInterval(1000, function () {
+    Fiende = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . f f f f . . . . . 
+        . . . . . . . e e e e f . . . . 
+        . . . . . . f d d d e e f . . . 
+        . . . . . c d d d f e e d f . . 
+        . . . . c d e d d d e e b c . . 
+        . . . . c c c c d d e e f . . . 
+        . . . . . f d d d e e f f . . . 
+        . . . . . . f f f f e e e f . f 
+        . . . . . . f b f e f f e f . e 
+        . . . . . f f f f f b b f f f e 
+        . . . . . f d f e e d d b f f f 
+        `, SpriteKind.Enemy)
+    Fiende.setVelocity(-50, 0)
+    Fiende.ay = 300
+    Fiende.setPosition(randint(0, 1000), 0)
+    Fiende.setFlag(SpriteFlag.AutoDestroy, true)
+})
