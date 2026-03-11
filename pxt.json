@@ -1,5 +1,5 @@
 {
-    "name": "Hungry dino",
+    "name": "Hungry dino - Copy",
     "description": "",
     "dependencies": {
         "device": "*"
@@ -16,7 +16,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "4.0.7",
+        "target": "4.0.10",
         "targetId": "arcade"
     },
     "supportedTargets": [
